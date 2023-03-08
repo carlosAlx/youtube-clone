@@ -3,10 +3,15 @@ import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FaMicrophone } from "react-icons/fa";
 import { BsYoutube, BsCameraVideo, BsBell } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useAppDispatch } from "../store/hooks";
 
 export const Navbar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   return (
     <nav className="flex justify-between items-center px-4 sticky top-0 z-50 py-4">
       {/* menu and logo */}

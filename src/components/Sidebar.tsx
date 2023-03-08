@@ -115,9 +115,9 @@ const textLinks = [
     "Test new features",
   ],
 ];
-export const Slidebar = () => {
+export const Sidebar = () => {
   return (
-    <div className="w-2/12 pr-5 overflow-auto pb-8 sidebar">
+    <div className="pr-5 overflow-auto pb-8 sidebar">
       {/* main link menu */}
       <ul className="flex flex-col border-b-2">
         {mainLinks.map(({ icon, name }) => (
