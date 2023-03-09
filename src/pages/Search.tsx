@@ -9,10 +9,11 @@ import { Spinner } from "../components/Spinner";
 import { clearVideos } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getHomePageVideos } from "../store/reducers/geHomePageVideos";
+import { getSearchPageVideos } from "../store/reducers/getSearchPageVideos";
 import { HomePageVideos } from "../Type";
 
 export const Search = () => {
-  const navgate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const videos = useAppSelector((state) => state.youtubeApp.videos);
   const searchTerm = useAppSelector((state) => state.youtubeApp.videos);
@@ -20,12 +21,12 @@ export const Search = () => {
   useEffect(() => {
     return () => {
       dispatch(clearVideos());
+      if (searchTerm === null) navigate("/");
+      else {
+        dispatch(getSearchPageVideos(false));
+      }
     };
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getHomePageVideos(false));
-  }, [dispatch]);
+  }, [dispatch, navigate, searchTerm]);
 
   return (
     <div className="max-h-screen overflow-hidden">
@@ -37,12 +38,12 @@ export const Search = () => {
         {videos.length ? (
           <InfiniteScroll
             dataLength={videos.length}
-            next={() => dispatch(getHomePageVideos(true))}
+            next={() => dispatch(getSearchPageVideos(true))}
             hasMore={videos.length < 500}
             loader={<Spinner />}
             height={900}
           >
-            <div className="grid grid-cols-4 gap-y-14 gap-x-8 p-8">
+            <div className="flex flex-col my-8 w-full gap-5">
               {videos.map((item: HomePageVideos) => (
                 <Cards data={item} key={item.videoId} />
               ))}
