@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Search } from "./pages/Search";
-// import { Watch } from "./pages/watch";
+import { Watch } from "./pages/Watch";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
-      { /* <Route path="/watch/:id" element={<Watch />} /> */ }
+       <Route path="/watch/:id" element={<Watch />} />
       </Routes>
     </BrowserRouter>
   );
