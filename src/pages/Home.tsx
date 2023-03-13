@@ -31,23 +31,23 @@ export const Home = () => {
       </div>
       <div className="flex h-[92.5vh]">
         <Sidebar />
-        {videos.length ? (
-          <InfiniteScroll
-            dataLength={videos.length}
-            next={() => dispatch(getHomePageVideos(true))}
-            hasMore={videos.length < 500}
-            loader={<Spinner />}
-            height={900}
-          >
-            <div className="grid grid-cols-4 gap-y-14 gap-x-8 p-8">
-              {videos.map((item: HomePageVideos) => (
-                <Cards data={item} key={item.videoId} />
-              ))}
-            </div>
-          </InfiniteScroll>
-        ) : (
-          <Spinner />
-        )}
+          {videos.length ? (
+            <InfiniteScroll
+              dataLength={videos.length}
+              next={() => dispatch(getHomePageVideos(true))}
+              hasMore={videos.length < 500}
+              loader={<Spinner />}
+              height={900}
+            >
+              <div className="grid grid-cols-4 gap-y-14 gap-x-5 p-8">
+                {videos.map((item: HomePageVideos) => (
+                  <Cards data={item} key={item.videoId} />
+                ))}
+              </div>
+            </InfiniteScroll>
+          ) : (
+            <Spinner />
+          )}
       </div>
     </div>
   );

@@ -117,7 +117,7 @@ const textLinks = [
 ];
 export const Sidebar = () => {
   return (
-    <div className="pr-5 overflow-auto pb-8 sidebar">
+    <div className="pr-5 overflow-auto pb-8 sidebar max-w-[14%]">
       {/* main link menu */}
       <ul className="flex flex-col border-b-2">
         {mainLinks.map(({ icon, name }) => (
@@ -195,7 +195,7 @@ export const Sidebar = () => {
       </ul>
       <span className="px-4 text-sm">&copy;2023 Google LLC</span>
       <br />
-      <p className="">this is clone YouTube site</p>
+      <p className="px-4 pt-4 text-md">This is clone YouTube site</p>
     </div>
   );
 };
