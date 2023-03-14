@@ -117,7 +117,7 @@ const textLinks = [
 ];
 export const Sidebar = () => {
   return (
-    <div className="pr-5 overflow-auto pb-8 sidebar max-w-[14%]">
+    <div className="pr-5 overflow-auto pb-8 max-w-[14%]">
       {/* main link menu */}
       <ul className="flex flex-col border-b-2">
         {mainLinks.map(({ icon, name }) => (

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { BiLike, BiDislike } from "react-icons/bi";
-import { HiScissors } from "react-icons/hi";
-import { MdOutlinePlaylistAdd } from "react-icons/md";
-import { FaShare } from "react-icons/fa";
+import { HiOutlineScissors, HiScissors } from "react-icons/hi";
+import { RiDownloadLine } from "react-icons/ri";
+import { TbShare3 } from "react-icons/tb";
 import { BsThreeDots } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
@@ -11,9 +11,14 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getRecommendedVideos } from "../store/reducers/getRecommendedVideos";
 import { getVideoDetails } from "../store/reducers/getVideoDetails";
 
-export const Watch = () => {
+type stateVi={
+  sidebarT: boolean;
+
+}
+
+export const Watch = ({sidebarT}:stateVi) => {
   const iconGray =
-    "flex items-center gap-1 cursor-pointer bg-gray-100 rounded-full px-2 py-1";
+    "flex items-center gap-1 cursor-pointer bg-gray-100 rounded-full px-2 py-1 hover:bg-gray-300";
   const [showMoreStats, setShowMoreStatus] = useState<boolean>(false);
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -42,7 +47,7 @@ export const Watch = () => {
       {currentPlayng && currentPlayng?.videoId === id && (
         <div className="max-h-screen overflow-hidden">
           <div className="h-[7.5vh]">
-            <Navbar />
+            <Navbar clickSideMenu={()=>{}}/>
           </div>
           <div className="flex w-full h-[92.5vh]">
             <div className="flex gap-y-10 gap-x-5 p-7 mx-20 mr-0 w-full overflow-auto">
@@ -50,16 +55,16 @@ export const Watch = () => {
                 <iframe
                   width="1280"
                   height="720"
-                  src={`https://www.youtube.com/embed/${id}?autoplay=1`}
+                  src={`https://www.youtube.com/embed/${id}?autoplay=true`}
                   title="YouTube video player"
-                  frameBorder="0"
+                  
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
                 <div className="mt-5">
                   <p className="text-xl">{currentPlayng.videoTitle}</p>
 
-                  <div className="flex gap-4 flex-col border-solid border-gray-400 border-2 my-5 pb-3 border-l-transparent border-r-transparent">
+                  <div className="flex gap-4 flex-col pb-3 border-l-transparent border-r-transparent">
                     <div className="flex items-center gap-5 mt-4 justify-between">
                       <div className="flex gap-5 items-center">
                         <img
@@ -77,8 +82,8 @@ export const Watch = () => {
                           </h6>
                         </div>
 
-                        <div className="flex flex-row gap-1 items-center">
-                          <button className="bg-gray-100 rounded-full p-2 text-sm tracking-wide">
+                        <div className="flex flex-row gap-4 items-center">
+                          <button className="bg-gray-100 rounded-full p-2 text-sm tracking-wide whitespace-nowrap ">
                             be a member
                           </button>
                           <button className="bg-black rounded-full p-2 text-sm tracking-wider text-white">
@@ -90,24 +95,28 @@ export const Watch = () => {
                       <div className="flex justify-between mt-1">
                         <div className="flex items-center gap-4">
                           <div className={iconGray}>
-                            <BiLike className="text-xl" />
-                            <strong>{currentPlayng.videoLikes}</strong>
+                            <i>
+                              <BiLike className="text-xl" />
+                            </i>
+                            <strong className="px-1">
+                              {currentPlayng.videoLikes}
+                            </strong>
+                            <i className="pl-2 border-l-2 border-gray-200 ">
+                              {" "}
+                              <BiDislike className="text-xl" />
+                            </i>
                           </div>
                           <div className={iconGray}>
-                            <BiDislike className="text-xl" />
-                            <strong>dislike</strong>
-                          </div>
-                          <div className={iconGray}>
-                            <FaShare className="text-xl" />
+                            <TbShare3 className="text-xl" />
                             <strong>share</strong>
                           </div>
                           <div className={iconGray}>
-                            <HiScissors className="text-xl" />
-                            <strong>clip</strong>
+                            <RiDownloadLine className="text-xl" />
+                            <strong>Download</strong>
                           </div>
                           <div className={iconGray}>
-                            <MdOutlinePlaylistAdd className="text-xl" />
-                            <strong>save</strong>
+                            <HiOutlineScissors className="text-xl" />
+                            <strong>clip</strong>
                           </div>
                           <div className={iconGray}>
                             <BsThreeDots className="text-xl" />
@@ -117,11 +126,14 @@ export const Watch = () => {
                     </div>
 
                     <div className="flex flex-col">
-                      <div className="text-sm bg-gray-100 rounded-2xl p-2">
-                        <span className="after:content-['•'] after:mx-1">
+                      <div className="text-sm bg-gray-100 rounded-2xl p-3">
+                        <span className="after:content-['•'] after:mx-1 font-medium">
                           {currentPlayng.videoViews} views
                         </span>
-                        <span> {currentPlayng.videoAge} ago</span>
+                        <span className="font-medium">
+                          {" "}
+                          {currentPlayng.videoAge} ago
+                        </span>
                         <div
                           className={`${
                             !showMoreStats ? "max-h-16 overflow-hidden" : ""

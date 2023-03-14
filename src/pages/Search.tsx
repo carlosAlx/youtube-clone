@@ -28,7 +28,7 @@ export const Search = () => {
   return (
     <div className="max-h-screen overflow-hidden">
       <div className="h-[7.5vh]">
-        <Navbar />
+        <Navbar clickSideMenu={()=>{}}/>
       </div>
       <div className="flex h-[92.5vh] w-full mb-4">
         <Sidebar />

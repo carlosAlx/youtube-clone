@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FaMicrophone } from "react-icons/fa";
 import { BsYoutube, BsCameraVideo } from "react-icons/bs";
@@ -9,11 +9,17 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { changeSearchTerm, clearSearchTerm, clearVideos } from "../store";
 import { getSearchPageVideos } from "../store/reducers/getSearchPageVideos";
 
-export const Navbar = () => {
+type navbarType = {
+  clickSideMenu: (value: boolean) => void;
+};
+
+export const Navbar = ({ clickSideMenu }: navbarType) => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const searchTerm = useAppSelector((state) => state.youtubeApp.searchTerm);
+  const [sidebar, setSidebar] = useState<boolean>(true);
+
   const handleSeatch = () => {
     if (location.pathname !== "/search") navigate("/search");
     else {
@@ -21,15 +27,21 @@ export const Navbar = () => {
       dispatch(getSearchPageVideos(false));
     }
   };
+  const handleClick = () => {
+    setSidebar(!sidebar);
+    clickSideMenu(sidebar);
+  };
 
   return (
     <nav className="flex justify-between items-center px-4 sticky top-0 z-50 py-4">
       {/* menu and logo */}
       <div className="flex gap-6 items-center text-2xl">
         <div className="rounded-full hover:bg-stone-200 p-2 items-start">
-          <RxHamburgerMenu className="" />
+          <i>
+            <RxHamburgerMenu onClick={handleClick} />
+          </i>
         </div>
-        <Link to={""}>
+        <Link to={"/"}>
           <div className="flex gap-1 items-center justify-center">
             <BsYoutube className="text-3xl text-red-600" />
             <span className="text-xl font-medium">YouTube</span>
