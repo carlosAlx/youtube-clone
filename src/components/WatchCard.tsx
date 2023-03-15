@@ -6,7 +6,7 @@ export const WatchCard = ({ data }: { data: RecommendedVideos }) => {
   return (
     <div className="flex gap-2">
       <div className="relative min-w-fit">
-        <span className="absolute bottom-2 right-2 text-sm bg-gray-900 px-2 py-0.5 z-10 text-white rounded-md">
+        <span className="absolute bottom-3 right-2 text-sm bg-gray-900 px-2 py-0.5 z-10 text-white rounded-md">
           {data.videoDuration}
         </span>
         <Link to={`/watch/${data.videoId}`}>

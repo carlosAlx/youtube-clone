@@ -36,7 +36,7 @@ export const Home = () => {
   };
 
   const iconSideMin =
-    "flex flex-col py-4 px-4 m-0 hover:bg-stone-100 rounded-xl items-center max-w-max";
+    "flex flex-col py-4 px-4 hover:bg-stone-100 rounded-xl items-center w-16";
 
   return (
     <div className="max-h-screen overflow-hidden">
@@ -47,7 +47,7 @@ export const Home = () => {
         {sidebar ? (
           <Sidebar />
         ) : (
-          <div className="m-0 flex p-1 flex-col items-center">
+          <div className="flex flex-col items-center">
             <a href="" className={iconSideMin}>
               <i>
                 <MdHomeFilled className="text-xl" />
@@ -76,8 +76,7 @@ export const Home = () => {
             </a>
           </div>
         )}
-
-        {videos.length ? (
+       {videos.length ? (
           <InfiniteScroll
             dataLength={videos.length}
             next={() => dispatch(getHomePageVideos(true))}

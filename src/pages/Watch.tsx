@@ -10,13 +10,15 @@ import { WatchCard } from "../components/WatchCard";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getRecommendedVideos } from "../store/reducers/getRecommendedVideos";
 import { getVideoDetails } from "../store/reducers/getVideoDetails";
+import { Spinner } from "../components/Spinner";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { getHomePageVideos } from "../store/reducers/geHomePageVideos";
 
-type stateVi={
+type stateVi = {
   sidebarT: boolean;
+};
 
-}
-
-export const Watch = ({sidebarT}:stateVi) => {
+export const Watch = ({ sidebarT }: stateVi) => {
   const iconGray =
     "flex items-center gap-1 cursor-pointer bg-gray-100 rounded-full px-2 py-1 hover:bg-gray-300";
   const [showMoreStats, setShowMoreStatus] = useState<boolean>(false);
@@ -47,25 +49,26 @@ export const Watch = ({sidebarT}:stateVi) => {
       {currentPlayng && currentPlayng?.videoId === id && (
         <div className="max-h-screen overflow-hidden">
           <div className="h-[7.5vh]">
-            <Navbar clickSideMenu={()=>{}}/>
+            <Navbar clickSideMenu={() => {}} />
           </div>
           <div className="flex w-full h-[92.5vh]">
-            <div className="flex gap-y-10 gap-x-5 p-7 mx-20 mr-0 w-full overflow-auto">
+            <div className="flex gap-y-10 gap-x-5 p-7 xl:mx-20 w-full overflow-auto lg:flex-row flex-col">
               <div className="w-full">
-                <iframe
-                  width="1280"
-                  height="720"
-                  src={`https://www.youtube.com/embed/${id}?autoplay=true`}
-                  title="YouTube video player"
-                  
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <div className="relative overflow-hidden w-full pt-[56%]">
+                  <iframe
+                  className="absolute top-0 left-0 bottom-0 right-0 w-full h-full"
+                    src={`https://www.youtube.com/embed/${id}`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+
                 <div className="mt-5">
                   <p className="text-xl">{currentPlayng.videoTitle}</p>
 
                   <div className="flex gap-4 flex-col pb-3 border-l-transparent border-r-transparent">
-                    <div className="flex items-center gap-5 mt-4 justify-between">
+                    <div className="flex items-center gap-5 mt-4 justify-between flex-wrap">
                       <div className="flex gap-5 items-center">
                         <img
                           src={currentPlayng.channelInfo.image}
@@ -156,11 +159,20 @@ export const Watch = ({sidebarT}:stateVi) => {
                   </div>
                 </div>
               </div>
-              <div className="mr-24 flex flex-col gap-3">
-                {getRecommendedVideos.length &&
-                  recommendedVideos.map((item) => (
+              <div className="lg:mr-24 flex flex-col gap-3 lg:w-[30%]">
+                {getRecommendedVideos.length ? (
+                   <InfiniteScroll
+                   dataLength={getRecommendedVideos.length}
+                   next={() => dispatch(getHomePageVideos(true))}
+                   hasMore={getRecommendedVideos.length < 500}
+                   loader={<Spinner />}
+                 >{recommendedVideos.map((item) => (
                     <WatchCard data={item} key={item.videoId} />
                   ))}
+                  </InfiniteScroll>):(
+                    <Spinner />
+
+                  )}
               </div>
             </div>
           </div>

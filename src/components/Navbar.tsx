@@ -33,7 +33,7 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
   };
 
   return (
-    <nav className="flex justify-between items-center px-4 sticky top-0 z-50 py-4">
+    <nav className="flex justify-between items-center px-4 sticky top-0 z-50 py-4 flex-wrap">
       {/* menu and logo */}
       <div className="flex gap-6 items-center text-2xl">
         <div className="rounded-full hover:bg-stone-200 p-2 items-start">
@@ -63,18 +63,19 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
               </i>
               <input
                 type="text"
-                className="outline-none w-96 border-none"
+                className="outline-none lg:w-96 border-none"
                 value={searchTerm}
                 onChange={(e) => dispatch(changeSearchTerm(e.target.value))}
               />
-              <i className="hover:bg-stone-200 rounded-full p-2">
-                <AiOutlineClose
-                  className={`text-xl cursor-pointer ${
-                    !searchTerm ? "invisible" : "visible"
-                  }`}
-                  onClick={() => dispatch(clearSearchTerm)}
-                />
-              </i>
+              {searchTerm && (
+                <i className="hover:bg-stone-200 rounded-full p-2">
+                  <AiOutlineClose
+                    className="text-xl cursor-pointer"
+                    onClick={() => dispatch(clearSearchTerm)}
+                  />
+                </i>
+              )}
+
               <button className="h-10 w-16 flex items-center justify-center bg-zinc-100 rounded-r-full">
                 <AiOutlineSearch className="text-2xl" />
               </button>
