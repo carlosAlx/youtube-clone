@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { BsFullscreen } from "react-icons/bs";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { SearchCards } from "../components/SearchCards";
 import { Sidebar } from "../components/Sidebar";
+import { SidebarMin } from "../components/SidebarMin";
 import { Spinner } from "../components/Spinner";
 import { clearVideos } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -16,22 +16,27 @@ export const Search = () => {
   const dispatch = useAppDispatch();
   const videos = useAppSelector((state) => state.youtubeApp.videos);
   const searchTerm = useAppSelector((state) => state.youtubeApp.searchTerm);
+  const [sidebar, setSidebar] = useState<boolean>(true);
 
-  useEffect(() => {
+ /* useEffect(() => {
     dispatch(clearVideos());
     if (searchTerm === "") navigate("/");
     else {
       dispatch(getSearchPageVideos(false));
     }
-  }, [dispatch, navigate, searchTerm]);
+  }, [dispatch, navigate, searchTerm]); */
+
+  const clickSideMenu = (menuSidebar: boolean) => {
+    setSidebar(menuSidebar);
+  };
 
   return (
     <div className="max-h-screen overflow-hidden">
       <div className="h-[7.5vh]">
-        <Navbar clickSideMenu={()=>{}}/>
+        <Navbar clickSideMenu={clickSideMenu} />
       </div>
       <div className="flex h-[92.5vh] w-full mb-4">
-        <Sidebar />
+        {sidebar ? <Sidebar /> : <SidebarMin />}
         <div className="w-full">
           {videos.length ? (
             <InfiniteScroll

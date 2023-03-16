@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BiLike, BiDislike } from "react-icons/bi";
-import { HiOutlineScissors, HiScissors } from "react-icons/hi";
+import { HiOutlineScissors } from "react-icons/hi";
 import { RiDownloadLine } from "react-icons/ri";
 import { TbShare3 } from "react-icons/tb";
 import { BsThreeDots } from "react-icons/bs";
@@ -14,11 +14,7 @@ import { Spinner } from "../components/Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getHomePageVideos } from "../store/reducers/geHomePageVideos";
 
-type stateVi = {
-  sidebarT: boolean;
-};
-
-export const Watch = ({ sidebarT }: stateVi) => {
+export const Watch = () => {
   const iconGray =
     "flex items-center gap-1 cursor-pointer bg-gray-100 rounded-full px-2 py-1 hover:bg-gray-300";
   const [showMoreStats, setShowMoreStatus] = useState<boolean>(false);
@@ -56,7 +52,7 @@ export const Watch = ({ sidebarT }: stateVi) => {
               <div className="w-full">
                 <div className="relative overflow-hidden w-full pt-[56%]">
                   <iframe
-                  className="absolute top-0 left-0 bottom-0 right-0 w-full h-full"
+                    className="absolute top-0 left-0 bottom-0 right-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${id}`}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -161,18 +157,19 @@ export const Watch = ({ sidebarT }: stateVi) => {
               </div>
               <div className="lg:mr-24 flex flex-col gap-3 lg:w-[30%]">
                 {getRecommendedVideos.length ? (
-                   <InfiniteScroll
-                   dataLength={getRecommendedVideos.length}
-                   next={() => dispatch(getHomePageVideos(true))}
-                   hasMore={getRecommendedVideos.length < 500}
-                   loader={<Spinner />}
-                 >{recommendedVideos.map((item) => (
-                    <WatchCard data={item} key={item.videoId} />
-                  ))}
-                  </InfiniteScroll>):(
-                    <Spinner />
-
-                  )}
+                  <InfiniteScroll
+                    dataLength={getRecommendedVideos.length}
+                    next={() => dispatch(getHomePageVideos(true))}
+                    hasMore={getRecommendedVideos.length < 500}
+                    loader={<Spinner />}
+                  >
+                    {recommendedVideos.map((item) => (
+                      <WatchCard data={item} key={item.videoId} />
+                    ))}
+                  </InfiniteScroll>
+                ) : (
+                  <Spinner />
+                )}
               </div>
             </div>
           </div>

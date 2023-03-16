@@ -18,7 +18,8 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const searchTerm = useAppSelector((state) => state.youtubeApp.searchTerm);
-  const [sidebar, setSidebar] = useState<boolean>(true);
+  const [sidebar, setSidebar] = useState<boolean>(false);
+  const [searchIcon, setSearchIcon] = useState<boolean>(false);
 
   const handleSeatch = () => {
     if (location.pathname !== "/search") navigate("/search");
@@ -31,21 +32,20 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
     setSidebar(!sidebar);
     clickSideMenu(sidebar);
   };
+  const iconCloseClick = () => {};
 
   return (
     <nav className="flex justify-between items-center px-4 sticky top-0 z-50 py-4 flex-wrap">
       {/* menu and logo */}
       <div className="flex gap-6 items-center text-2xl">
-        <div className="rounded-full hover:bg-stone-200 p-2 items-start">
-          <i>
-            <RxHamburgerMenu onClick={handleClick} />
-          </i>
-        </div>
+        <i className="rounded-full hover:bg-stone-200 p-2 items-start">
+          <RxHamburgerMenu onClick={handleClick} />
+        </i>
         <Link to={"/"}>
-          <div className="flex gap-1 items-center justify-center">
+          <i className="flex gap-1 items-center justify-center">
             <BsYoutube className="text-3xl text-red-600" />
             <span className="text-xl font-medium">YouTube</span>
-          </div>
+          </i>
         </Link>
       </div>
       <div className="flex items-center justify-center gap-5">
@@ -53,25 +53,36 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSeatch();
+            if (searchTerm !== "") {
+              handleSeatch();
+            }
           }}
         >
           <div className="flex items-center h-10 ">
             <div className="flex gap-2 items-center rounded-full border">
-              <i className="bg-white p-2 rounded-l-full">
+              <i
+                className={`bg-white p-2 rounded-l-full ${
+                  !searchIcon ? "hidden" : ""
+                }`}
+              >
                 <AiOutlineSearch className="text-2xl" />
               </i>
+
               <input
                 type="text"
-                className="outline-none lg:w-96 border-none"
+                className="outline-none lg:w-96 border-none ml-1"
                 value={searchTerm}
-                onChange={(e) => dispatch(changeSearchTerm(e.target.value))}
+                onFocus={() => setSearchIcon(true)}
+                onBlur={() => setSearchIcon(false)}
+                onChange={(e) => {
+                  dispatch(changeSearchTerm(e.target.value));
+                }}
               />
               {searchTerm && (
                 <i className="hover:bg-stone-200 rounded-full p-2">
                   <AiOutlineClose
                     className="text-xl cursor-pointer"
-                    onClick={() => dispatch(clearSearchTerm)}
+                    onClick={() => dispatch(clearSearchTerm())}
                   />
                 </i>
               )}

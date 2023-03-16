@@ -4,7 +4,7 @@ import { HomePageVideos } from "../Type";
 
 export const SearchCards = ({ data }: { data: HomePageVideos }) => {
   return (
-    <div className="flex flex-row gap-3 w-[1200px] mx-auto">
+    <div className="flex flex-col md:flex-row gap-3 max-w-[1200px] mx-auto w-full">
       <div className="relative">
         <span className="absolute bottom-2 right-2 text-sm bg-gray-900 px-2 py-0.5 z-10 text-white rounded-md">
           {data.videoDuration}

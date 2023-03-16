@@ -10,6 +10,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Cards } from "../components/Cards";
 import { Navbar } from "../components/Navbar";
 import { Sidebar } from "../components/Sidebar";
+import { SidebarMin } from "../components/SidebarMin";
 import { Spinner } from "../components/Spinner";
 import { clearVideos } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -35,9 +36,6 @@ export const Home = () => {
     setSidebar(menuSidebar);
   };
 
-  const iconSideMin =
-    "flex flex-col py-4 px-4 hover:bg-stone-100 rounded-xl items-center w-16";
-
   return (
     <div className="max-h-screen overflow-hidden">
       <div className="h-[7.5vh]">
@@ -47,34 +45,7 @@ export const Home = () => {
         {sidebar ? (
           <Sidebar />
         ) : (
-          <div className="flex flex-col items-center">
-            <a href="" className={iconSideMin}>
-              <i>
-                <MdHomeFilled className="text-xl" />
-              </i>
-              <span className="text-[0.55rem] tracking-wider">Home</span>
-            </a>
-            <a href="" className={iconSideMin}>
-              <i>
-                <MdOutlineSlowMotionVideo className="text-xl" />
-              </i>
-              <span className="text-[0.55rem] tracking-wider">Shorts</span>
-            </a>
-            <a href="" className={iconSideMin}>
-              <i>
-                <MdSubscriptions className="text-xl" />
-              </i>
-              <span className="text-[0.55rem] tracking-wider">
-                Subscriptions
-              </span>
-            </a>
-            <a href="" className={iconSideMin}>
-              <i>
-                <MdOutlineVideoLibrary className="text-xl" />
-              </i>
-              <span className="text-[0.55rem] tracking-wider">Library</span>
-            </a>
-          </div>
+          <SidebarMin />
         )}
        {videos.length ? (
           <InfiniteScroll
