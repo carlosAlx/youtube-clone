@@ -115,10 +115,15 @@ const textLinks = [
     "Test new features",
   ],
 ];
-export const Sidebar = () => {
+export const Sidebar = ({ siderClick }: { siderClick: boolean }) => {
   return (
-    <div className="pr-5 overflow-auto pb-8 w-64 lg:min-w-[14%] absolute left-0 lg:relative z-40 bg-white lg:bg-transparent">
+    <div
+      className={`pr-5 overflow-auto pb-8 w-64 lg:min-w-[14%] ${
+        siderClick ? "":""
+      }  z-40 bg-white lg:bg-transparent transition-all duration-700 lg:relative absolute`}
+    >
       {/* main link menu */}
+
       <ul className="flex flex-col border-b-2">
         {mainLinks.map(({ icon, name }) => (
           <li
@@ -182,7 +187,7 @@ export const Sidebar = () => {
           </li>
         ))}
       </ul>
-        {/* text link menu */}
+      {/* text link menu */}
       <ul className="flex gap-2 flex-wrap text-sm p-4">
         {textLinks[0].map((name) => (
           <li key={name}>{name}</li>

@@ -32,7 +32,6 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
     setSidebar(!sidebar);
     clickSideMenu(sidebar);
   };
-  const iconCloseClick = () => {};
 
   return (
     <nav className="flex justify-between items-center px-4 sticky top-0 z-50 py-4 flex-wrap">

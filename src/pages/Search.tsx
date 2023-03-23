@@ -9,7 +9,7 @@ import { Spinner } from "../components/Spinner";
 import { clearVideos } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getSearchPageVideos } from "../store/reducers/getSearchPageVideos";
-import { HomePageVideos } from "../Type";
+import { HomePageVideos, RecommendedVideos } from "../Type";
 
 export const Search = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export const Search = () => {
   const searchTerm = useAppSelector((state) => state.youtubeApp.searchTerm);
   const [sidebar, setSidebar] = useState<boolean>(true);
 
- /* useEffect(() => {
+  /* useEffect(() => {
     dispatch(clearVideos());
     if (searchTerm === "") navigate("/");
     else {
@@ -36,7 +36,7 @@ export const Search = () => {
         <Navbar clickSideMenu={clickSideMenu} />
       </div>
       <div className="flex h-[92.5vh] w-full mb-4">
-        {sidebar ? <Sidebar /> : <SidebarMin />}
+        {sidebar ? <Sidebar siderClick={false} /> : <SidebarMin />}
         <div className="w-full">
           {videos.length ? (
             <InfiniteScroll

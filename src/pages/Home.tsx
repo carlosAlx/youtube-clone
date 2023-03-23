@@ -1,11 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BsFullscreen } from "react-icons/bs";
-import {
-  MdHomeFilled,
-  MdOutlineSlowMotionVideo,
-  MdOutlineVideoLibrary,
-  MdSubscriptions,
-} from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Cards } from "../components/Cards";
 import { Navbar } from "../components/Navbar";
@@ -42,12 +35,9 @@ export const Home = () => {
         <Navbar clickSideMenu={clickSideMenu} />
       </div>
       <div className="flex h-[92.5vh]">
-        {sidebar ? (
-          <Sidebar />
-        ) : (
-          <SidebarMin />
-        )}
-       {videos.length ? (
+        {sidebar ? <Sidebar siderClick={sidebar} /> : <SidebarMin />}
+
+        {videos.length ? (
           <InfiniteScroll
             dataLength={videos.length}
             next={() => dispatch(getHomePageVideos(true))}
@@ -55,7 +45,7 @@ export const Home = () => {
             loader={<Spinner />}
             height={900}
           >
-            <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-y-14 gap-x-5 p-8">
+            <div className="grid  grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-y-14 gap-x-5 p-8 ">
               {videos.map((item: HomePageVideos) => (
                 <Cards data={item} key={item.videoId} />
               ))}

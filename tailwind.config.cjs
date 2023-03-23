@@ -12,7 +12,9 @@ module.exports = {
       lg: '960px',
       xl: '1200px',
     },
-    extend: {},
+    extend: {
+
+    },
   },
   plugins: [require("@tailwindcss/line-clamp"), require('tailwind-scrollbar'),
 ],

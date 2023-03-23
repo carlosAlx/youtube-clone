@@ -22,7 +22,7 @@ export const Watch = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const currentPlayng = useAppSelector(
-    (state) => state.youtubeApp.currentPlayng
+    (state) => state.youtubeApp.currentPlaying
   );
   const recommendedVideos = useAppSelector(
     (state) => state.youtubeApp.recommendedVideos
@@ -52,7 +52,7 @@ export const Watch = () => {
               <div className="w-full">
                 <div className="relative overflow-hidden w-full pt-[56%]">
                   <iframe
-                    className="absolute top-0 left-0 bottom-0 right-0 w-full h-full"
+                    className="absolute inset-0 w-full h-full"
                     src={`https://www.youtube.com/embed/${id}`}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -156,20 +156,10 @@ export const Watch = () => {
                 </div>
               </div>
               <div className="lg:mr-24 flex flex-col gap-3 lg:w-[30%]">
-                {getRecommendedVideos.length ? (
-                  <InfiniteScroll
-                    dataLength={getRecommendedVideos.length}
-                    next={() => dispatch(getHomePageVideos(true))}
-                    hasMore={getRecommendedVideos.length < 500}
-                    loader={<Spinner />}
-                  >
-                    {recommendedVideos.map((item) => (
-                      <WatchCard data={item} key={item.videoId} />
-                    ))}
-                  </InfiniteScroll>
-                ) : (
-                  <Spinner />
-                )}
+                {getRecommendedVideos.length &&
+                  recommendedVideos.map((item) => (
+                    <WatchCard data={item} key={item.videoId} />
+                  ))}
               </div>
             </div>
           </div>

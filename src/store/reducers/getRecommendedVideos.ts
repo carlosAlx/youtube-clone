@@ -12,7 +12,7 @@ export const getRecommendedVideos = createAsyncThunk(
   async (videoId: string, { getState }) => {
     const {
       youtubeApp: {
-        currentPlayng: {
+        currentPlaying: {
           channelInfo: { id: channelId },
         },
       },
@@ -24,10 +24,10 @@ export const getRecommendedVideos = createAsyncThunk(
       `${YOUTUBE_API_URL}/activities?key=${API_KEY}&channelId=${channelId}&part=snippet,contentDetails&maxResults=20&type=video&videoId=${videoId}`
     );
 
-    const parsedData: RecommendedVideos[] = await parseRecommendedData(
+    const parsedData: RecommendedVideos[] = (await parseRecommendedData(
       items,
       videoId
-    );
+    )) as RecommendedVideos[];
 
     return { parsedData };
   }

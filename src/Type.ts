@@ -1,12 +1,11 @@
 export interface InitialState {
   videos: HomePageVideos[];
-  currentPlayng: CurrentPlayng | null;
+  currentPlaying: CurrentPlaying;
   searchTerm: string;
-  searchResult: [];
+  searchResults: [];
   nextPageToken: string | null;
   recommendedVideos: RecommendedVideos[];
 }
-
 export interface HomePageVideos {
   videoId: string;
   videoTitle: string;
@@ -21,8 +20,7 @@ export interface HomePageVideos {
     image: string;
     name: string;
   };
-}
-export interface CurrentPlaying {
+}export interface CurrentPlaying {
   videoId: string;
   videoTitle: string;
   videoDescription: string;
@@ -36,7 +34,6 @@ export interface CurrentPlaying {
     subscribers: string;
   };
 }
-
 export interface RecommendedVideos {
   videoId: string;
   videoTitle: string;
@@ -49,7 +46,6 @@ export interface RecommendedVideos {
     name: string;
   };
 }
-
 export interface Item {
   snippet: {
     title: string;
