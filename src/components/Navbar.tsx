@@ -1,44 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { FaMicrophone } from "react-icons/fa";
 import { BsYoutube, BsCameraVideo } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, matchPath, useLocation, useNavigate } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { changeSearchTerm, clearSearchTerm, clearVideos } from "../store";
 import { getSearchPageVideos } from "../store/reducers/getSearchPageVideos";
+import { useMenuContext } from "../context/MenuContext";
 
-type navbarType = {
-  clickSideMenu: (value: boolean) => void;
-};
-
-export const Navbar = ({ clickSideMenu }: navbarType) => {
+export const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const searchTerm = useAppSelector((state) => state.youtubeApp.searchTerm);
-  const [sidebar, setSidebar] = useState<boolean>(false);
   const [searchIcon, setSearchIcon] = useState<boolean>(false);
+  const { dispatchAction, state } = useMenuContext();
 
   const handleSeatch = () => {
-    if (location.pathname !== "/search") navigate("/search");
+    if (location.pathname !== "/search" && searchTerm !== "")
+      navigate("/search");
     else {
       dispatch(clearVideos());
       dispatch(getSearchPageVideos(false));
     }
   };
-  const handleClick = () => {
-    setSidebar(!sidebar);
-    clickSideMenu(sidebar);
-  };
+  /* verifica se o menu toggle esta open na pagina watch, se tiver ele fecha */
+  useEffect(() => {
+    if ((matchPath("/watch/:id", location.pathname)) && !state.isOpen){
+      dispatchAction({ type: "TOGGLE" });
+    }
+  }, [navigate, location]);
 
   return (
     <nav className="flex justify-between items-center px-4 sticky top-0 z-50 py-4 flex-wrap">
       {/* menu and logo */}
       <div className="flex gap-6 items-center text-2xl">
         <i className="rounded-full hover:bg-stone-200 p-2 items-start">
-          <RxHamburgerMenu onClick={handleClick} />
+          <RxHamburgerMenu
+            onClick={() => {
+              dispatchAction({ type: "TOGGLE" });
+            }}
+          />
         </i>
         <Link to={"/"}>
           <i className="flex gap-1 items-center justify-center">
@@ -58,18 +62,19 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
           }}
         >
           <div className="flex items-center h-10 ">
-            <div className="flex gap-2 items-center rounded-full border">
+            <div className="flex gap-2 items-center rounded-full border overflow-hidden">
+               {/* search icons*/}
               <i
-                className={`bg-white p-2 rounded-l-full ${
+                className={`bg-white p-2 pr-1 rounded-l-full -z-10 ${
                   !searchIcon ? "hidden" : ""
                 }`}
               >
                 <AiOutlineSearch className="text-2xl" />
               </i>
-
+               {/* input*/}
               <input
                 type="text"
-                className="outline-none lg:w-96 border-none ml-1"
+                className="outline-none lg:w-96 border-none ml-2"
                 value={searchTerm}
                 onFocus={() => setSearchIcon(true)}
                 onBlur={() => setSearchIcon(false)}
@@ -77,6 +82,7 @@ export const Navbar = ({ clickSideMenu }: navbarType) => {
                   dispatch(changeSearchTerm(e.target.value));
                 }}
               />
+               {/* close icons*/}
               {searchTerm && (
                 <i className="hover:bg-stone-200 rounded-full p-2">
                   <AiOutlineClose

@@ -28,6 +28,7 @@ export const getRecommendedVideos = createAsyncThunk(
       items,
       videoId
     )) as RecommendedVideos[];
+    console.log(parsedData)
 
     return { parsedData };
   }

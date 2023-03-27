@@ -10,9 +10,7 @@ import { WatchCard } from "../components/WatchCard";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getRecommendedVideos } from "../store/reducers/getRecommendedVideos";
 import { getVideoDetails } from "../store/reducers/getVideoDetails";
-import { Spinner } from "../components/Spinner";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { getHomePageVideos } from "../store/reducers/geHomePageVideos";
+import { Sidebar } from "../components/Sidebar";
 
 export const Watch = () => {
   const iconGray =
@@ -43,12 +41,13 @@ export const Watch = () => {
   return (
     <>
       {currentPlayng && currentPlayng?.videoId === id && (
-        <div className="max-h-screen overflow-hidden">
+        <div className="max-h-screen overflow-hidden relative">
           <div className="h-[7.5vh]">
-            <Navbar clickSideMenu={() => {}} />
-          </div>
+            <Navbar />
+          </div>          
           <div className="flex w-full h-[92.5vh]">
-            <div className="flex gap-y-10 gap-x-5 p-7 xl:mx-20 w-full overflow-auto lg:flex-row flex-col">
+          <Sidebar />          
+            <div className="flex gap-y-10 gap-x-5 p-7 xl:ml-20 w-full overflow-auto lg:flex-row flex-col">
               <div className="w-full">
                 <div className="relative overflow-hidden w-full pt-[56%]">
                   <iframe

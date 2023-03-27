@@ -1,41 +1,44 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Navigate } from "react-router-dom";
 import { Cards } from "../components/Cards";
 import { Navbar } from "../components/Navbar";
 import { Sidebar } from "../components/Sidebar";
 import { SidebarMin } from "../components/SidebarMin";
 import { Spinner } from "../components/Spinner";
+import { useMenuContext } from "../context/MenuContext";
 import { clearVideos } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getHomePageVideos } from "../store/reducers/geHomePageVideos";
 import { HomePageVideos } from "../Type";
+import useMediaQuery from "../utils/useMediaQuery";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
   const videos = useAppSelector((state) => state.youtubeApp.videos);
-  const [sidebar, setSidebar] = useState<boolean>(true);
+  const { state } = useMenuContext();
+  const mediaQuery = useMediaQuery("(min-width:960px)");
 
   useEffect(() => {
-    return () => {
-      dispatch(clearVideos());
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
+    dispatch(clearVideos());
     dispatch(getHomePageVideos(false));
   }, [dispatch]);
 
-  const clickSideMenu = (menuSidebar: boolean) => {
-    setSidebar(menuSidebar);
-  };
-
   return (
-    <div className="max-h-screen overflow-hidden">
+    <div className="max-h-screen overflow-hidden relative">
       <div className="h-[7.5vh]">
-        <Navbar clickSideMenu={clickSideMenu} />
+        <Navbar />
       </div>
       <div className="flex h-[92.5vh]">
-        {sidebar ? <Sidebar siderClick={sidebar} /> : <SidebarMin />}
+        {mediaQuery ? (
+          !state.isOpen ? (
+            <Sidebar />
+          ) : (
+            <SidebarMin />
+          )
+        ) : (
+          <Sidebar />
+        )}
 
         {videos.length ? (
           <InfiniteScroll

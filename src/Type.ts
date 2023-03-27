@@ -20,7 +20,8 @@ export interface HomePageVideos {
     image: string;
     name: string;
   };
-}export interface CurrentPlaying {
+}
+export interface CurrentPlaying {
   videoId: string;
   videoTitle: string;
   videoDescription: string;
